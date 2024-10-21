@@ -1,0 +1,97 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    }
+
+Table CustomerFeedback {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    product_id INTEGER 
+    feedback_text VARCHAR 
+    rating INTEGER 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    price FLOAT 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    name VARCHAR 
+    position VARCHAR 
+    salary FLOAT 
+    }
+
+Table Inventory {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    quantity_in_stock INTEGER 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    order_date DATETIME 
+    }
+
+Table OrderDetail {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table ProductSupplier {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    supplier_id INTEGER 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    }
+
+Table Promotion {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    discount_percent FLOAT 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table Shipment {
+    id INTEGER [primary key]
+    supplier_id INTEGER 
+    shipment_date DATETIME 
+    }
+
+Table ShipmentDetail {
+    id INTEGER [primary key]
+    shipment_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: CustomerFeedback.(customer_id) < Customer.(id)
+    Ref: CustomerFeedback.(product_id) < Product.(id)
+    Ref: Inventory.(product_id) < Product.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: OrderDetail.(order_id) < Order.(id)
+    Ref: OrderDetail.(product_id) < Product.(id)
+    Ref: ProductSupplier.(product_id) < Product.(id)
+    Ref: ProductSupplier.(supplier_id) < Supplier.(id)
+    Ref: Promotion.(product_id) < Product.(id)
+    Ref: Shipment.(supplier_id) < Supplier.(id)
+    Ref: ShipmentDetail.(product_id) < Product.(id)
+    Ref: ShipmentDetail.(shipment_id) < Shipment.(id)

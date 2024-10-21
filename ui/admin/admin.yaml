@@ -1,0 +1,355 @@
+about:
+  date: October 21, 2024 06:29:02
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 12
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+      required: true
+    - name: id
+    description: This page shows information about customers.
+    info_list: This page shows information about customers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CustomerFeedbackList
+      resource: CustomerFeedback
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    type: Customer
+    user_key: name
+  CustomerFeedback:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: product_id
+      required: true
+    - name: feedback_text
+    - name: rating
+    description: This table collects feedback from customers about products.
+    info_list: This table collects feedback from customers about products.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: CustomerFeedback
+    user_key: id
+  Employee:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: position
+    - name: salary
+      required: true
+    - name: id
+    description: This page shows information about employees working at the store,
+      including their salary.
+    info_list: This page shows information about employees working at the store, including
+      their salary.
+    type: Employee
+    user_key: name
+  Inventory:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+      required: true
+    - name: quantity_in_stock
+      required: true
+    description: This table tracks the stock levels of products in the fruit store.
+    info_list: This table tracks the stock levels of products in the fruit store.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Inventory
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: order_date
+      required: true
+    description: This table records customer orders.
+    info_list: This table records customer orders.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  OrderDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+      required: true
+    - name: product_id
+      required: true
+    - name: quantity
+      required: true
+    description: This page shows details of each product within an order.
+    info_list: This page shows details of each product within an order.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: price
+      required: true
+    - name: id
+    description: This page shows information about products available in the fruit
+      store.
+    info_list: This page shows information about products available in the fruit store.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: CustomerFeedbackList
+      resource: CustomerFeedback
+    - direction: tomany
+      fks:
+      - product_id
+      name: InventoryList
+      resource: Inventory
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: ProductSupplierList
+      resource: ProductSupplier
+    - direction: tomany
+      fks:
+      - product_id
+      name: PromotionList
+      resource: Promotion
+    - direction: tomany
+      fks:
+      - product_id
+      name: ShipmentDetailList
+      resource: ShipmentDetail
+    type: Product
+    user_key: name
+  ProductSupplier:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+      required: true
+    - name: supplier_id
+      required: true
+    description: This junction table represents the many-to-many relationship between
+      products and suppliers.
+    info_list: This junction table represents the many-to-many relationship between
+      products and suppliers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: ProductSupplier
+    user_key: id
+  Promotion:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+      required: true
+    - name: discount_percent
+      required: true
+    - name: start_date
+      required: true
+    - name: end_date
+      required: true
+    description: This page shows information about product promotions.
+    info_list: This page shows information about product promotions.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Promotion
+    user_key: id
+  Shipment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: supplier_id
+      required: true
+    - name: shipment_date
+      required: true
+    description: This table records shipments received from suppliers.
+    info_list: This table records shipments received from suppliers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - shipment_id
+      name: ShipmentDetailList
+      resource: ShipmentDetail
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: Shipment
+    user_key: id
+  ShipmentDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+      required: true
+    - name: shipment_id
+      required: true
+    - name: quantity
+      required: true
+    description: This table details the products included in a shipment.
+    info_list: This table details the products included in a shipment.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    - direction: toone
+      fks:
+      - shipment_id
+      name: shipment
+      resource: Shipment
+    type: ShipmentDetail
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: contact_info
+    - name: id
+    description: This page shows information about different suppliers of products.
+    info_list: This page shows information about different suppliers of products.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: ProductSupplierList
+      resource: ProductSupplier
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: ShipmentList
+      resource: Shipment
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'
